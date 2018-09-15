@@ -13,10 +13,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # per sapere quando una co
 app.secret_key = 'jose'  # la secret key per la crittazione del JWT
 api = Api(app)  # assegna i verbi alle risorse
 
-@app.before_first_request  # lancia la funzione che crea le tabelle (è tutti già definito nei Model) subito per prima cosa
-def create_tables():
-    db.create_all()
-
 jwt = JWT(app, authenticate, identity)  # prende l'app e le funzioni, crea un endpoint /auth e manda username/password alla funzione di autenticazione
 
 api.add_resource(Store, '/store/<string:name>')
