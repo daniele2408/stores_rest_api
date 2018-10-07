@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from flask_restful import Api
 from flask_jwt import JWT
@@ -8,7 +10,7 @@ from resources.item import Item, ItemList
 from resources.store import Store, StoreList
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'  # il file è al root folder del progetto
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db') # var globale del db postgresql usato da heroku, mettiamo il vecchio sqlite come seconda scelta   # il file è al root folder del progetto
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # per sapere quando una cosa è cambiata ma non salvata, spegniamo quello di flask dato che c'è quella di sqlalchemy già
 app.secret_key = 'jose'  # la secret key per la crittazione del JWT
 api = Api(app)  # assegna i verbi alle risorse
